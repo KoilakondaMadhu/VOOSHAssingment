@@ -1,42 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, ScrollView } from 'react-native';
-import TaskList from './TaskList'; // Import your TaskList component
+import { View, Text, Button, ScrollView, TouchableOpacity } from 'react-native';
+import TaskList from './TaskList'; // Import the TaskList component
 
-const HomeScreen = ({ navigation, access_token }) => {
-  // Initialize tasks state using useState
+const HomeScreen = ({ navigation }) => {
   const [tasks, setTasks] = useState([]);
 
-  // Use useEffect to fetch and update tasks from local storage
   useEffect(() => {
-    // Fetch tasks from local storage using AsyncStorage or similar storage method
-    // Update the tasks state with the retrieved data
-  }, []); // Make sure to define any dependencies for re-fetching tasks if needed
+    // Fetch tasks from your data source or AsyncStorage
+    const fetchedTasks = [
+      { id: 1, name: 'Task 1', status: 'TO DO' },
+      { id: 2, name: 'Task 2', status: 'IN PROGRESS' },
+      { id: 3, name: 'Task 3', status: 'COMPLETED' },
+    ];
 
-  // Create a function to handle task deletion
-  const handleDeleteTask = (taskId) => {
-    // Implement the logic to delete the task with taskId
-  };
+    setTasks(fetchedTasks);
+  }, []);
 
-  // Create a function to mark a task as completed
-  const handleCompleteTask = (taskId) => {
-    // Implement the logic to mark the task with taskId as completed
+  const handleTaskClick = (taskId) => {
+    // Navigate to the task details screen with the taskId
+    navigation.navigate('TaskDetails', { taskId });
   };
 
   return (
-    <ScrollView>
-      <Text>Home Page</Text>
-      <TaskList
-        tasks={tasks}
-        onEdit={(taskId) => handleTaskEdit(taskId)}
-        onDelete={(taskId) => handleDeleteTask(taskId)}
-        onComplete={(taskId) => handleCompleteTask(taskId)}
-      />
-      {/* Add a button for creating a new task */}
+    <View style={{ flex: 1, padding: 16 }}>
+      <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 16 }}>
+        To-Do List
+      </Text>
+
+      {/* Add the TaskList component here */}
+      <TaskList tasks={tasks} onTaskClick={handleTaskClick} />
+
       <Button
-        title="Create New Task"
+        title="Add Task"
         onPress={() => navigation.navigate('TaskCreation')}
       />
-    </ScrollView>
+    </View>
   );
 };
 
