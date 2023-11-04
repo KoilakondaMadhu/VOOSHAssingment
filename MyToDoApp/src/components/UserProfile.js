@@ -7,7 +7,7 @@ const UserProfile = ({ user, onLogout }) => {
       <Text style={styles.title}>User Profile</Text>
       <Text>Name: {user.name}</Text>
       <Text>Email: {user.email}</Text>
-      {/* Add more user data display as needed */}
+      {/* Add more user details as needed */}
       <Button title="Logout" onPress={onLogout} />
     </View>
   );
@@ -18,11 +18,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
   },
   title: {
     fontSize: 24,
-    marginBottom: 20,
+    fontWeight: 'bold',
+    marginBottom: 16,
   },
 });
 
