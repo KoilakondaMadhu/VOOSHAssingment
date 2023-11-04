@@ -1,52 +1,41 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
-const LoginForm = ({ onLogin }) => {
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button } from 'react-native';
+
+const LoginForm = ({ onLogin, onRegister, isRegistering }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    onLogin(email, password);
+  const handleAction = () => {
+    if (isRegistering) {
+      // Handle registration logic
+      onRegister(email, password);
+    } else {
+      // Handle login logic
+      onLogin(email, password);
+    }
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+    <View>
+      <Text>{isRegistering ? 'Register' : 'Login'} Page</Text>
       <TextInput
-        style={styles.input}
         placeholder="Email"
         value={email}
         onChangeText={(text) => setEmail(text)}
       />
       <TextInput
-        style={styles.input}
         placeholder="Password"
         secureTextEntry
         value={password}
         onChangeText={(text) => setPassword(text)}
       />
-      <Button title="Login" onPress={handleLogin} />
+      <Button title={isRegistering ? 'Register' : 'Login'} onPress={handleAction} />
+      <Text onPress={() => onSwitchMode(!isRegistering)}>
+        {isRegistering ? 'Switch to Login' : 'Switch to Register'}
+      </Text>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
-  input: {
-    width: '100%',
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 20,
-    paddingHorizontal: 10,
-  },
-});
 
 export default LoginForm;
